@@ -7,4 +7,4 @@ This docker image contains below Jupyter [community](https://jupyter-docker-stac
 - ~~[gpu-jupyter](https://github.com/iot-salzburg/gpu-jupyter/)~~ (Needs some work hence not included)
 - ~~[cgspatial-notebook](https://github.com/SCiO-systems/cgspatial-notebook)~~ (Conflicts Java 8 against Java 11 used in java-notebook. Needs some work hence not included)
 - [octave-notebook](https://github.com/visitsb/jupyter-octave)
-- [jupyter-fastai-intel-notebook](https://github.com/visitsb/jupyter-fastai-intel-notebook)
+- [jupyter-fastai-intel-notebook](https://github.com/visitsb/jupyter-fastai-intel-notebook) (excluding [Intel® TensorFlow](https://intel.github.io/stacks/dlrs/index.html#dlrs-with-tensorflow) in lieu of [jupyter/tensorflow-notebook](https://github.com/jupyter/docker-stacks/tree/master/tensorflow-notebook))

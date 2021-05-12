@@ -50,7 +50,8 @@ WORKDIR /tmp
 # https://www.pugetsystems.com/labs/hpc/Intel-oneAPI-AI-Analytics-Toolkit----Introduction-and-Install-with-conda-2068/
 # 
 # TODO: -c conda-forge intel-aikit-modin takes ridiculously long time for conda to resolve; skipping `intel-aikit-modin` from environment
-RUN conda create -n $ONEAPI_ENV --quiet --yes -c intel intel-aikit-tensorflow intel-aikit-pytorch && \
+# TODO: -c intel intel-aikit-tensorflow has conda package conflicts with jupyter/tensorflow-notebook, hence skipping
+RUN conda create -n $ONEAPI_ENV --quiet --yes -c intel intel-aikit-pytorch && \
     conda install -n $ONEAPI_ENV --quiet --yes nb_conda nb_conda_kernels ipykernel pip && \
     $CONDA_PREFIX/bin/python -m pip install --quiet fastai jupyter_contrib_nbextensions && \
     $CONDA_PREFIX/bin/python -m ipykernel install --user --name $ONEAPI_ENV --display-name "Fastai (Intel® oneAPI)" && \
