@@ -45,17 +45,20 @@ WORKDIR /tmp
 
 # Our base is already a Jupyter Notebook, so just pick any extra packages for Fastai within our Jupyter environment
 # https://fastai1.fast.ai/install.html#jupyter-notebook-dependencies
-#
+
 # Also add kernelspec for ONEAPI_ENV
 # https://www.pugetsystems.com/labs/hpc/Intel-oneAPI-AI-Analytics-Toolkit----Introduction-and-Install-with-conda-2068/
-# 
+
 # TODO: -c conda-forge intel-aikit-modin takes ridiculously long time for conda to resolve; skipping `intel-aikit-modin` from environment
-# TODO: -c intel intel-aikit-tensorflow has conda package conflicts with jupyter/tensorflow-notebook, hence skipping
+#       `intel-aikit-tensorflow` has package conflicts with `jupyter/tensorflow-notebook`; hence skipping
 RUN conda create -n $ONEAPI_ENV --quiet --yes -c intel intel-aikit-pytorch && \
-    conda install -n $ONEAPI_ENV --quiet --yes nb_conda nb_conda_kernels ipykernel pip && \
+    # `nb_conda` `nb_conda_kernels` have conda package conflicts, hence skipping
+    # `ipykernel` `pip` already installed; hence skipping
+    # conda install -n $ONEAPI_ENV --quiet --yes nb_conda nb_conda_kernels ipykernel pip && \
     $CONDA_PREFIX/bin/python -m pip install --quiet fastai jupyter_contrib_nbextensions && \
     $CONDA_PREFIX/bin/python -m ipykernel install --user --name $ONEAPI_ENV --display-name "Fastai (Intel® oneAPI)" && \
-    conda update -n $ONEAPI_ENV --all --quiet --yes && \
+    # Causes package conflicts; hence skipping
+    # conda update -n $ONEAPI_ENV --all --quiet --yes && \
     conda clean --all -f -y && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
@@ -393,7 +396,6 @@ RUN apt-get update && \
     tk tk-dev \
     jq && \
     rm -rf /var/lib/apt/lists/*
-
 
 USER $NB_UID
 
