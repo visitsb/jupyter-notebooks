@@ -80,10 +80,16 @@ RUN mkdir "$HOME/$FASTBOOK" && \
     fix-permissions "${CONDA_DIR}" && \
     fix-permissions "/home/${NB_USER}"
 
+# ADD --chown does not honor ARG, ENV
+# https://raw.githubusercontent.com/jupyter/docker-stacks/master/base-notebook/Dockerfile
+# ARG NB_USER="jovyan"
+# ARG NB_UID="1000"
+# ARG NB_GID="100"
+
 #COPY --chown=$NB_USER:$NB_GID download_testdata.py $HOME/$FASTAI
-ADD --chown=$NB_USER:$NB_GID https://raw.githubusercontent.com/fastai/docker-containers/master/fastai-build/download_testdata.py $HOME/$FASTAI
+ADD --chown=jovyan:100 https://raw.githubusercontent.com/fastai/docker-containers/master/fastai-build/download_testdata.py $HOME/$FASTAI
 #COPY --chown=$NB_USER:$NB_GID extract.sh $HOME/$FASTAI
-ADD --chown=$NB_USER:$NB_GID https://raw.githubusercontent.com/fastai/docker-containers/master/fastai-build/extract.sh $HOME/$FASTAI
+ADD --chown=jovyan:100 https://raw.githubusercontent.com/fastai/docker-containers/master/fastai-build/extract.sh $HOME/$FASTAI
 
 # Downloaded data, extract paths are as below-
 # download_testdata.py --> $HOME/$FASTAI/archive
